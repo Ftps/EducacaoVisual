@@ -6,3 +6,14 @@ for i = 1:3
     line = fgets(fp);
     disp(line);
 end
+
+
+
+
+
+
+function [mat, l, c] = data_read(~)
+
+
+
+end
