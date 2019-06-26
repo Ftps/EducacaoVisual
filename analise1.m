@@ -58,9 +58,12 @@ for i = 1:size_lin(m)
 end
 
 HPL_Vec = HPL_Ref*ones(1, size_lin(m));
-VPL_VEC = HPL_Ref*ones(1, size_lin(m));
+VPL_Vec = VPL_Ref*ones(1, size_lin(m));
 
-plot(m(i,Time), HPL_Vec);
+subplot(2,1,1);
+plot(m(:,Time), HPL_Vec, m(:,Time), errors(Hor,:));
+subplot(2,1,2);
+plot(m(:,Time), VPL_Vec, m(:,Time), errors(Ver,:));
 
 
 
