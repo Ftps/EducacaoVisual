@@ -8,6 +8,7 @@ Time=1; EAS=2; QNE=3;
 
 %plot temporal de todas as grandezas medidas
 for i=2:size_col(m)
+    subplot(5,2,i)
     plot(m(:,Time), m(:,i));
 end
 
