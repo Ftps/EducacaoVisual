@@ -1,25 +1,12 @@
 clear
 file = "EV_2019.1_3";
-Time = 1;
-Sats = 4;
-HPL = 5;
-VPL = 6;
-HPL_Ref = 16;
-VPL_Ref = 5;
-Lat = 7;
-Lon = 8;
-Alt = 9;
-Ref = 6;
-ER = 6.371*10^6;
-deg = pi/180;
-Hor = 1;
-Ver = 2;
-HAL_Ref = 40;
-VAL_Ref = 12; % CAT-I
-
 fp = fopen(file,'r');
 m = data_read(fp);
 fclose(fp);
+
+Time = 1; Sats = 4; HPL = 5; VPL = 6; HPL_Ref = 16; VPL_Ref = 5; 
+Lat = 7; Lon = 8; Alt = 9; Ref = 6; ER = 6.371*10^6; deg = pi/180; 
+Hor = 1; Ver = 2; HAL_Ref = 40; VAL_Ref = 12; % CAT-I
 
 errors = zeros(2, size_lin(m));
 alerts = zeros(2, size_lin(m));
@@ -68,7 +55,7 @@ plot(m(:,Time), VPL_Vec, m(:,Time), errors(Ver,:));
 
 
 
-% função para ler os valores dos ficheiros
+% funcao para ler os valores dos ficheiros
 function mat = data_read(fp)
     cols = 1;
     line = fgets(fp);
@@ -92,7 +79,7 @@ function mat = data_read(fp)
 
 end
 
-%função auxiliar para tamanho do vetor
+%funcoes auxiliares para tamanho da matriz
 function n = size_col(v)
     [~, n] = size(v);
 end

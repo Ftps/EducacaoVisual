@@ -1,5 +1,5 @@
+clear
 file = "EV_2019.3_3";
-
 fp = fopen(file,'r');
 m = data_read(fp);
 fclose(fp);
@@ -45,7 +45,7 @@ suptitle('representacao temporal das aceleracoes');
 
 T = 0.004;
 Fs = 1/T;
-L = size_m(m);
+L = size_lin(m);
 NFFT = 2^(nextpow2(L));
 ff = Fs/2*linspace(0,1,NFFT/2+1);
 
@@ -89,13 +89,13 @@ suptitle('espetro unilateral de amplitude de cada aceleracao');
 
 
 
-% função para ler os valores dos ficheiros
+% funcao para ler os valores dos ficheiros
 function mat = data_read(fp)
     cols = 1;
     line = fgets(fp);
     mat = 0;
     
-    for i = 1:size_vec(line)
+    for i = 1:size_col(line)
         if line(i) == ';'
             cols = cols + 1;
         end
@@ -113,13 +113,11 @@ function mat = data_read(fp)
 
 end
 
-%função auxiliar para tamanho do vetor
-function n = size_vec(v)
+%funcoes auxiliares para tamanho da matriz
+function n = size_col(v)
     [~, n] = size(v);
 end
 
-%função auxiliar para saber o tamanho vertical do ficheiro
-function n = size_m(v)
+function n = size_lin(v)
     [n, ~] = size(v);
 end
-
