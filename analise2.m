@@ -4,15 +4,38 @@ fp = fopen(file,'r');
 m = data_read(fp);
 fclose(fp);
 
-Time=1; EAS=2; QNE=3;
+Time=1; EAS=2; QNE=3; a_z=4;
+g=9.80665;
 
 %plot temporal de todas as grandezas medidas
-for i=2:size_col(m)
-    subplot(5,2,i)
+figure();
+for i= EAS:a_z
+    subplot(3,1,i-1)
     plot(m(:,Time), m(:,i));
 end
+suptitle('Representacao temporal da EAS, QNE e aceleracao vertical');
+
+figure();
+for i=5:size_col(m)
+    subplot(2,3,i-a_z)
+    plot(m(:,Time), m(:,i));
+end
+suptitle('Representacao temporal da velocidade de rotacao, consumo e temperatura dos motores direito e esquerdo');
 
 
+G_acel=m(:,a_z)/g;
+G_picos=G_acel(1);
+for i=2:size_lin(G_acel)
+    ddt=(G_acel(i)-G_acel(i-1))/(m(i,Time)-m(i-1,Time));
+    sinal=sign(ddt);
+    if sinal
+    G_picos=[G_picos, G_acel(i)]
+end
+
+out_file = "picos_acel.txt";
+fp = fopen(out_file,'w');
+
+fclose(fp);
 
 % funcao para ler os valores dos ficheiros
 function mat = data_read(fp)

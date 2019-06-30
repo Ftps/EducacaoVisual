@@ -17,7 +17,7 @@ a2 = m(:,A2);
 a3 = m(:,A3);
 a4 = m(:,A4);
 
-% representar graficamente a variação temporal das grandezas medidas
+% representar graficamente a variacao temporal das grandezas medidas
 figure();
 
 subplot(2,2,1);
