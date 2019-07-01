@@ -25,11 +25,15 @@ suptitle('Representacao temporal da velocidade de rotacao, consumo e temperatura
 
 G_acel=m(:,a_z)/g;
 G_picos=G_acel(1);
+sinal=0;
 for i=2:size_lin(G_acel)
     ddt=(G_acel(i)-G_acel(i-1))/(m(i,Time)-m(i-1,Time));
+    
+    if (sinal ~= sign(ddt) && sign(ddt)~= 0)
+    G_picos=[G_picos; G_acel(i)];
     sinal=sign(ddt);
-    if sinal
-    G_picos=[G_picos, G_acel(i)]
+    end
+    
 end
 
 out_file = "picos_acel.txt";
