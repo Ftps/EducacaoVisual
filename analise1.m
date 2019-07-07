@@ -4,7 +4,7 @@ fp = fopen(file,'r');
 m = data_read(fp);
 fclose(fp);
 
-Time = 1; Sats = 4; HPL = 5; VPL = 6; HPL_Ref = 16; VPL_Ref = 5; 
+Time = 1; Sats = 4; HPL = 5; VPL = 6; HNE_Ref = 16; VNE_Ref = 5; 
 Lat = 7; Lon = 8; Alt = 9; Ref = 6; ER = 6.371*10^6; deg = pi/180; 
 Hor = 1; Ver = 2; HAL_Ref = 40; VAL_Ref = 12; % CAT-I
 
@@ -28,8 +28,8 @@ for i = 1:size_lin(m)
     end
 end
 
-HNE = prctile(errors(Hor), 95);
-VNE = prctile(errors(Ver), 95);
+HPE = prctile(errors(Hor), 95); %0.5672m
+VPE = prctile(errors(Ver), 95); %2.3540m
 
 HAL = prctile(abs(alerts(Hor)), 99);
 VAL = prctile(abs(alerts(Ver)), 99);
@@ -42,13 +42,15 @@ for i = 1:size_lin(m)
     end
 end
 
-HPL_Vec = HPL_Ref*ones(1, size_lin(m));
-VPL_Vec = VPL_Ref*ones(1, size_lin(m));
+HAL_Vec = HAL_Ref*ones(1, size_lin(m));
+VAL_Vec = VAL_Ref*ones(1, size_lin(m));
 
-subplot(2,1,1);
-plot(m(:,Time), HPL_Vec, m(:,Time), errors(Hor,:));
-subplot(2,1,2);
-plot(m(:,Time), VPL_Vec, m(:,Time), errors(Ver,:));
+subplot(3,1,1);
+plot(m(:,Time), HAL_Vec, m(:,Time), errors(Hor,:));
+subplot(3,1,2);
+plot(m(:,Time), VAL_Vec, m(:,Time), errors(Ver,:));
+subplot(3,1,3);
+plot(m(:,Time), m(:,Sats));
 
 
 
