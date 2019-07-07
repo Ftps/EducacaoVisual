@@ -47,12 +47,23 @@ VAL_Vec = VAL_Ref*ones(1, size_lin(m));
 
 subplot(3,1,1);
 plot(m(:,Time), HAL_Vec, m(:,Time), errors(Hor,:));
+axis([-inf inf -inf 65]);
+xlabel('t (s)');
+ylabel('Erro (m)');
+
 subplot(3,1,2);
 plot(m(:,Time), VAL_Vec, m(:,Time), errors(Ver,:));
+axis([-inf inf -inf 14]);
+xlabel('t (s)');
+ylabel('Erro (m)');
+
 subplot(3,1,3);
 plot(m(:,Time), m(:,Sats));
+axis([-inf inf 7.5 9.5]);
+xlabel('t (s)');
+ylabel('Nº de Satelites ');
 
-
+suptitle('Representação Temporal dos Parâmetros do Voo');
 
 
 % funcao para ler os valores dos ficheiros
