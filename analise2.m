@@ -29,8 +29,12 @@ suptitle('Representacao temporal da velocidade de rotacao, consumo e temperatura
 
 G_acel=m(:,a_z)/g;
 G_picos=G_acel(1);
+sinal=0;
 for i=2:size_lin(G_acel)
     ddt=(G_acel(i)-G_acel(i-1))/(m(i,Time)-m(i-1,Time));
+
+    if (sinal ~= sign(ddt) && sign(ddt)~= 0)
+    G_picos=[G_picos; G_acel(i)];
     sinal=sign(ddt);
     if sinal
     G_picos=[G_picos, G_acel(i)];
@@ -45,7 +49,7 @@ fclose(fp);
 sinal = 0;
 for i=1:size_lin(N)
     for j=1:size_col(G_acel)
-        
+
 
     end
 end
@@ -56,13 +60,13 @@ function mat = data_read(fp)
     cols = 1;
     line = fgets(fp);
     mat = 0;
-    
+
     for i = 1:size_col(line)
         if line(i) == ';'
             cols = cols + 1;
         end
     end
-    
+
     while ~feof(fp)
         line = fgets(fp);
         aux = sscanf(line, "%f;", [1, cols]);
@@ -83,5 +87,3 @@ end
 function n = size_lin(v)
     [n, ~] = size(v);
 end
-
-
