@@ -4,8 +4,8 @@ fp = fopen(file,'r');
 m = data_read(fp);
 fclose(fp);
 
-Time = 1; Sats = 4; HPL = 5; VPL = 6; HPL_Ref = 16; VPL_Ref = 5; 
-Lat = 7; Lon = 8; Alt = 9; Ref = 6; ER = 6.371*10^6; deg = pi/180; 
+Time = 1; Sats = 4; HPL = 5; VPL = 6; HPL_Ref = 16; VPL_Ref = 5;
+Lat = 7; Lon = 8; Alt = 9; Ref = 6; ER = 6.371*10^6; deg = pi/180;
 Hor = 1; Ver = 2; HAL_Ref = 40; VAL_Ref = 12; % CAT-I
 
 errors = zeros(2, size_lin(m));
@@ -13,11 +13,11 @@ alerts = zeros(2, size_lin(m));
 
 for i = 1:size_lin(m)
     dLat = abs(ER*deg*(m(i, Lat) - m(i, Lat+Ref)));
-    dLon = abs(ER*deg*(m(i, Lon) - m(i, Lon+Ref)));
-    
+    dLon = abs(ER*deg*(m(i, Lon) - m(i, Lon+Ref))*sin(m(i, Lat+Ref)*deg));
+
     errors(Hor, i) = sqrt(dLat^2 + dLon^2);
     errors(Ver, i) = abs(m(i, Alt) - m(i, Alt+Ref));
-    
+
     alerts(Hor, i) = errors(Hor, i) - m(i, HPL);
     if alerts(Hor, i) > 0
        fprintf("Evento vertical, no tempo da semana %d\n", m(i,Time));
@@ -58,13 +58,13 @@ function mat = data_read(fp)
     cols = 1;
     line = fgets(fp);
     mat = 0;
-    
+
     for i = 1:size_col(line)
         if line(i) == ';'
             cols = cols + 1;
         end
     end
-    
+
     while ~feof(fp)
         line = fgets(fp);
         aux = sscanf(line, "%f;", [1, cols]);
