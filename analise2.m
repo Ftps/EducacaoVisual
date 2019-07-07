@@ -10,12 +10,16 @@ N_count = zeros(1, size_lin(N));
 
 Time=1; EAS=2; QNE=3; a_z=4;
 g=9.80665;
+ eixo_y=["tempo","EAS (kts)","QNE (ft)","Acel. Vertical (m/s^2)","Vel. de Rotação (%)","Fuel Flow (lb/h)", "T. Gases Escape (K)","Vel. de Rotação (%)","Fuel Flow (lb/h)", "T. Gases Escape (K)"];
 
 %plot temporal de todas as grandezas medidas
 figure();
 for i= EAS:a_z
     subplot(3,1,i-1)
     plot(m(:,Time), m(:,i));
+    %axis([-inf inf 7.5 9.5]);
+    xlabel('t (s)');
+    ylabel(eixo_y(i));
 end
 %suptitle('Representacao temporal da EAS, QNE e aceleracao vertical');
 
@@ -23,6 +27,9 @@ figure();
 for i=5:7
     subplot(1,3,i-4)
     plot(m(:,Time), m(:,i));
+    %axis([-inf inf 7.5 9.5]);
+    xlabel('t (s)');
+    ylabel(eixo_y(i));
 end
 %suptitle('Representacao temporal da velocidade de rotacao, consumo e temperatura do motor direito');
 
@@ -30,6 +37,9 @@ figure();
 for i=8:size_col(m)
     subplot(1,3,i-7)
     plot(m(:,Time), m(:,i));
+    %axis([-inf inf 7.5 9.5]);
+    xlabel('t (s)');
+    ylabel(eixo_y(i));
 end
 
 G_acel=m(:,a_z)/g;
