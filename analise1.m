@@ -4,7 +4,7 @@ fp = fopen(file,'r');
 m = data_read(fp);
 fclose(fp);
 
-Time = 1; Sats = 4; HPL = 5; VPL = 6; HNE_Ref = 16; VNE_Ref = 5; 
+Time = 1; Sats = 4; HPL = 5; VPL = 6; 
 Lat = 7; Lon = 8; Alt = 9; Ref = 6; ER = 6.371*10^6; deg = pi/180; 
 Hor = 1; Ver = 2; HAL_Ref = 40; VAL_Ref = 12; % CAT-I
 
@@ -20,11 +20,11 @@ for i = 1:size_lin(m)
 
     alerts(Hor, i) = errors(Hor, i) - m(i, HPL);
     if alerts(Hor, i) > 0
-       fprintf("Evento vertical, no tempo da semana %d\n", m(i,Time));
+       fprintf("Evento horizontal, no tempo da semana %d (s), com um erro de %.2f metros\n", m(i,Time), errors(Hor, i));
     end
     alerts(Ver, i) = errors(Ver, i) - m(i, VPL);
     if alerts(Ver, i) > 0
-       fprintf("Evento vertical, no tempo da semana %d\n", m(i,Time));
+       fprintf("Evento vertical, no tempo da semana %d (s), com um erro de %.2f metros\n", m(i,Time), errors(Ver, i));
     end
 end
 
@@ -45,25 +45,37 @@ end
 HAL_Vec = HAL_Ref*ones(1, size_lin(m));
 VAL_Vec = VAL_Ref*ones(1, size_lin(m));
 
-subplot(3,1,1);
-plot(m(:,Time), HAL_Vec, m(:,Time), errors(Hor,:));
-axis([-inf inf -inf 65]);
-xlabel('t (s)');
-ylabel('Erro (m)');
-
-subplot(3,1,2);
-plot(m(:,Time), VAL_Vec, m(:,Time), errors(Ver,:));
-axis([-inf inf -inf 14]);
-xlabel('t (s)');
-ylabel('Erro (m)');
-
-subplot(3,1,3);
+figure(1)
 plot(m(:,Time), m(:,Sats));
 axis([-inf inf 7.5 9.5]);
 xlabel('t (s)');
 ylabel('Nº de Satelites ');
 
-suptitle('Representação Temporal dos Parâmetros do Voo');
+figure(2)
+subplot(2,1,1);
+plot(m(:,Time), HAL_Vec, m(:,Time), m(:,HPL));
+axis([-inf inf 0 42]);
+xlabel('t (s)');
+ylabel('Níveis de proteção e alerta (m)');
+
+subplot(2,1,2);
+plot(m(:,Time), VAL_Vec, m(:,Time), m(:,VPL));
+axis([-inf inf 0 15]);
+xlabel('t (s)');
+ylabel('Níveis de proteção e alerta (m)');
+
+figure(3)
+subplot(2,1,1);
+plot(m(:,Time), m(:,HPL), m(:,Time), errors(Hor,:));
+axis([-inf inf 0 60]);
+xlabel('t (s)');
+ylabel('Erro (m)');
+
+subplot(2,1,2);
+plot(m(:,Time), m(:,VPL), m(:,Time), errors(Ver,:));
+axis([-inf inf 0 15]);
+xlabel('t (s)');
+ylabel('Erro (m)');
 
 
 % funcao para ler os valores dos ficheiros
