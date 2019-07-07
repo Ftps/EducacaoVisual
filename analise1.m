@@ -20,19 +20,19 @@ for i = 1:size_lin(m)
 
     alerts(Hor, i) = errors(Hor, i) - m(i, HPL);
     if alerts(Hor, i) > 0
-       fprintf("Evento horizontal, no tempo da semana %d (s), com um erro de %.2f metros\n", m(i,Time), errors(Hor, i));
+       fprintf("Evento horizontal, no tempo da semana %d (s), com um erro de %.2f metros. O HPL é de apenas %.2f m nesse momento.\n", m(i,Time), errors(Hor, i), m(i,HPL));
     end
     alerts(Ver, i) = errors(Ver, i) - m(i, VPL);
     if alerts(Ver, i) > 0
-       fprintf("Evento vertical, no tempo da semana %d (s), com um erro de %.2f metros\n", m(i,Time), errors(Ver, i));
+       fprintf("Evento vertical, no tempo da semana %d (s), com um erro de %.2f metros. O VPL é de apenas %.2f m nesse momento.\n", m(i,Time), errors(Ver, i), m(i,VPL));
     end
 end
 
 HPE = prctile(errors(Hor), 95); %0.5672m
 VPE = prctile(errors(Ver), 95); %2.3540m
 
-HAL = prctile(abs(alerts(Hor)), 99);
-VAL = prctile(abs(alerts(Ver)), 99);
+HAL = prctile(m(:,HPL), 99);
+VAL = prctile(m(:,VPL), 99);
 
 Dispo = 1;
 
