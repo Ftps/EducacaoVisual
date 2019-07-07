@@ -17,15 +17,20 @@ for i= EAS:a_z
     subplot(3,1,i-1)
     plot(m(:,Time), m(:,i));
 end
-suptitle('Representacao temporal da EAS, QNE e aceleracao vertical');
+%suptitle('Representacao temporal da EAS, QNE e aceleracao vertical');
 
 figure();
-for i=5:size_col(m)
-    subplot(2,3,i-a_z)
+for i=5:7
+    subplot(1,3,i-4)
     plot(m(:,Time), m(:,i));
 end
-suptitle('Representacao temporal da velocidade de rotacao, consumo e temperatura dos motores direito e esquerdo');
+%suptitle('Representacao temporal da velocidade de rotacao, consumo e temperatura do motor direito');
 
+figure();
+for i=8:size_col(m)
+    subplot(1,3,i-7)
+    plot(m(:,Time), m(:,i));
+end
 
 G_acel=m(:,a_z)/g;
 G_picos=[m(1, Time), G_acel(1)];
