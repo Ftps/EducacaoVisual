@@ -20,13 +20,11 @@ for i = 1:size_lin(m)
     
     alerts(Hor, i) = errors(Hor, i) - m(i, HPL);
     if alerts(Hor, i) > 0
-       disp("poop horizontal");
-       disp(i);
+       fprintf("Evento vertical, no tempo da semana %d\n", m(i,Time));
     end
     alerts(Ver, i) = errors(Ver, i) - m(i, VPL);
     if alerts(Ver, i) > 0
-       disp("poop vertical");
-       disp(i);
+       fprintf("Evento vertical, no tempo da semana %d\n", m(i,Time));
     end
 end
 
